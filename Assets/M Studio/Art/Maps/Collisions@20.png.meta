@@ -3,7 +3,7 @@ guid: 7f1ec8314d44949f29dbb2b0651eccf3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -358,7 +361,7 @@ TextureImporter:
       - - {x: -10, y: -10}
         - {x: 9, y: -10}
         - {x: 5, y: -8}
-        - {x: -6, y: -2}
+        - {x: -7, y: -2}
         - {x: -10, y: 0}
       tessellationDetail: 0
       bones: []
@@ -389,9 +392,8 @@ TextureImporter:
       Collisions@20_7: 1040830517
       Collisions@20_1: 57520357
       Collisions@20_4: -1179878604
-  spritePackingTag: 
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BoundsConfiner
   layers:
   - Default
   - TransparentFX
@@ -41,6 +42,42 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Grund Button
+    uniqueID: 2101492029
+    locked: 0
+  - name: Grund Middle
+    uniqueID: 2629007459
+    locked: 0
+  - name: Grund Top
+    uniqueID: 3926234865
+    locked: 0
+  - name: stuff1
+    uniqueID: 559996765
+    locked: 0
+  - name: stuff2
+    uniqueID: 839146427
+    locked: 0
+  - name: Dig
+    uniqueID: 2375389043
+    locked: 0
+  - name: Water
+    uniqueID: 401126453
+    locked: 0
+  - name: Front1
+    uniqueID: 3422587817
+    locked: 0
+  - name: Front2
+    uniqueID: 3149372637
+    locked: 0
   - name: Instance
     uniqueID: 1090355151
+    locked: 0
+  - name: Font1
+    uniqueID: 2885142165
+    locked: 0
+  - name: Font2
+    uniqueID: 2953902491
+    locked: 0
+  - name: Collision
+    uniqueID: 4053153779
     locked: 0

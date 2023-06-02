@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Editor/UI%20Builder/Test.uss?fileID=7433441132597879392&amp;guid=e22b759c65e7335479a741d0e7f8f323&amp;type=3#Test" />
+    <ui:Label text="Hello World! From UXML" />
+    <ui:Label text="Hello World! With Style" class="custom-label" />
+    <uie:ObjectField label="Object Field" name="aaa" allow-scene-objects="false" />
+    <uie:ObjectField label="Object Field" />
+    <ui:VisualElement name="ccc" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <uie:PropertyField />
+    </ui:VisualElement>
+    <uie:ObjectField label="Object Field" />
+</ui:UXML>

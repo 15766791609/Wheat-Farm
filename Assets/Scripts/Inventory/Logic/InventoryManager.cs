@@ -10,6 +10,13 @@ namespace MFarm.Inventory
         public ItemDatalist_SO itemDatalist_SO;
         [Header("背包数据")]
         public InventoryBag_SO playerBag;
+
+
+        private void Start()
+        {
+            EventHandler.CallUpdataInventoryUI(InventoryLocation.Player, playerBag.itemList);
+
+        }
         /// <summary>
         /// 获取对应ID的数据
         /// </summary>
@@ -88,6 +95,7 @@ namespace MFarm.Inventory
                 playerBag.itemList[index] = item;
 
             }
+            EventHandler.CallUpdataInventoryUI(InventoryLocation.Player, playerBag.itemList);
         }
     }
 }

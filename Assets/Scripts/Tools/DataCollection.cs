@@ -17,3 +17,11 @@ public class ItemDetails
     public float sellPercentage;//售出值百分百
 
 }
+
+[System.Serializable]
+public struct InventoryItem
+{
+    public int itemID;
+    public int itemAmount;
+}
+

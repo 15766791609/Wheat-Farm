@@ -7,6 +7,9 @@ namespace MFarm.Inventory
 {
     public class InventoryUI : MonoBehaviour
     {
+
+        public ItemToolTip itemToolTip;
+
         [Header("ÍÏ×§Í¼Æ¬")]
         public Image dragItem;
         [SerializeField] private GameObject bagUI;

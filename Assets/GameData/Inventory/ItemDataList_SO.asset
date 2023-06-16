@@ -69,7 +69,7 @@ MonoBehaviour:
     itemDescription: "\u4E00\u628A\u5E73\u5E73\u65E0\u5947\u7684\u6C34\u58F6\uFF0C\u53EF\u4EE5\u6D47\u6C34"
     itemUseRadius: 1
     canPickedup: 1
-    canDropped: 0
+    canDropped: 1
     canCarried: 1
     itemPrice: 0
     sellPercentage: 0

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace MFarm.Inventory
 {
-    public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler,IEndDragHandler
+    public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [Header("获取组件")]
         [SerializeField] private Image slotImage;
@@ -74,7 +74,7 @@ namespace MFarm.Inventory
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if(itemAmount != 0)
+            if (itemAmount != 0)
             {
                 inventoryUI.dragItem.enabled = true;
                 inventoryUI.dragItem.sprite = slotImage.sprite;
@@ -82,7 +82,7 @@ namespace MFarm.Inventory
                 isSelected = true;
                 inventoryUI.UpdataSlotHightlight(slotIndex);
             }
-           
+
 
         }
 
@@ -95,7 +95,29 @@ namespace MFarm.Inventory
         {
             isSelected = false;
             inventoryUI.dragItem.enabled = false;
-            Debug.Log(eventData.pointerCurrentRaycast.gameObject);
+
+            if (eventData.pointerCurrentRaycast.gameObject != null)
+            {
+                if (eventData.pointerCurrentRaycast.gameObject.GetComponent<SlotUI>() == null)
+                    return;
+                //获取落点位置的背包格子序号
+                var targetSlot = eventData.pointerCurrentRaycast.gameObject.GetComponent<SlotUI>();
+                int targerIndex = targetSlot.slotIndex;
+
+                if (slotType == SlotType.Bag && targetSlot.slotType == SlotType.Bag)
+                {
+                    InventoryManager.Instance.SwapItem(slotIndex, targerIndex);
+                }
+            }
+            else if(itemDetails.canDropped)//扔到地面
+            {
+                var pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+
+                EventHandler.CallInstantiateItemInScene(itemDetails.itemID, pos);
+            }
+
+            //Debug.Log(eventData.pointerCurrentRaycast.gameObject);
+            //取消高亮显示
             inventoryUI.UpdataSlotHightlight(-1);
 
         }

@@ -97,6 +97,29 @@ namespace MFarm.Inventory
             }
             EventHandler.CallUpdataInventoryUI(InventoryLocation.Player, playerBag.itemList);
         }
+
+        /// <summary>
+        /// Player背包范围内物品交换
+        /// </summary>
+        /// <param name="fromInxde">初始物品位置</param>
+        /// <param name="targetIndex">目标背包位置</param>
+        public void SwapItem(int fromInxde, int targetIndex)
+        {
+            InventoryItem currentItem = playerBag.itemList[fromInxde];
+            InventoryItem targetItem = playerBag.itemList[targetIndex];
+
+            if(targetItem.itemID == 0)
+            {
+                playerBag.itemList[fromInxde] = new InventoryItem();
+                playerBag.itemList[targetIndex] = currentItem;
+            }
+            else
+            {
+                playerBag.itemList[fromInxde] = targetItem;
+                playerBag.itemList[targetIndex] = currentItem;
+            }
+            EventHandler.CallUpdataInventoryUI(InventoryLocation.Player, playerBag.itemList);
+        }
     }
 }
 

@@ -33,12 +33,20 @@ namespace MFarm.Inventory
         private void OnEnable()
         {
             EventHandler.UpdateInventoryUI += OnUpdateInventoryUI;
+            EventHandler.BeforeScenenUnloadEvent += OnBeforeScenenUnloadEvent;
         }
         private void OnDisable()
         {
             EventHandler.UpdateInventoryUI -= OnUpdateInventoryUI;
+            EventHandler.BeforeScenenUnloadEvent -= OnBeforeScenenUnloadEvent;
 
         }
+
+        private void OnBeforeScenenUnloadEvent()
+        {
+            UpdataSlotHightlight(-1);
+        }
+
         private void OnUpdateInventoryUI(InventoryLocation location, List<InventoryItem> list)
         {
 

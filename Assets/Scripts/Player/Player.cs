@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,34 @@ public class Player : MonoBehaviour
 
     private Animator[] animators;
     private bool isMoving;
+    private bool inputDisable;
+    private void OnEnable()
+    {
+        EventHandler.MoveToPosition += OnMoveToPosition;
+        EventHandler.BeforeScenenUnloadEvent += OnBeforeScenenUnloadEvent;
+        EventHandler.AfterScenenUnloadEvent += OnAfterScenenUnloadEvent;
+    }
+    private void OnDisable()
+    {
+        EventHandler.MoveToPosition -= OnMoveToPosition;
+        EventHandler.BeforeScenenUnloadEvent -= OnBeforeScenenUnloadEvent;
+        EventHandler.AfterScenenUnloadEvent -= OnAfterScenenUnloadEvent;
+    }
+    private void OnAfterScenenUnloadEvent()
+    {
+        inputDisable = false;
+    }
+
+    private void OnBeforeScenenUnloadEvent()
+    {
+        inputDisable = true;
+    }
+
+    private void OnMoveToPosition(Vector3 targetPos)
+    {
+        gameObject.transform.position = targetPos;
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,18 +52,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        PlayerInput();
+        if (!inputDisable)
+        {
+            PlayerInput();
+        }
+        else
+        {
+            isMoving = false;
+        }
         SwitchAnimation();
     }
     private void FixedUpdate()
     {
-        Movement();
+        if (!inputDisable)
+            Movement();
     }
     private void PlayerInput()
     {
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
-        if(inputX != 0 && inputY != 0)
+        if (inputX != 0 && inputY != 0)
         {
             inputX = inputX * 0.6f;
             inputY = inputY * 0.6f;
@@ -45,7 +82,7 @@ public class Player : MonoBehaviour
             inputY = inputY * 0.5f;
         }
         movementInput = new Vector2(inputX, inputY);
-        
+
         isMoving = movementInput != Vector2.zero;
     }
 
@@ -61,7 +98,7 @@ public class Player : MonoBehaviour
         foreach (var anim in animators)
         {
             anim.SetBool("IsMoving", isMoving);
-            if(isMoving)
+            if (isMoving)
             {
                 anim.SetFloat("InputX", inputX);
                 anim.SetFloat("InputY", inputY);

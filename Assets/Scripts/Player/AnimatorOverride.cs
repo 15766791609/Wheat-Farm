@@ -25,16 +25,22 @@ public class AnimatorOverride : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.ItemSelectedEvent += OnInstantiateItemInScene;
+        EventHandler.BeforeScenenUnloadEvent += OnBeforeScenenUnloadEvent;
     }
 
-
+    
 
     private void OnDisable()
     {
         EventHandler.ItemSelectedEvent -= OnInstantiateItemInScene;
+        EventHandler.BeforeScenenUnloadEvent -= OnBeforeScenenUnloadEvent;
 
     }
-
+    private void OnBeforeScenenUnloadEvent()
+    {
+        holdItem.enabled = false;
+        SwitchAnimatior(PartType.None);
+    }
     private void OnInstantiateItemInScene(ItemDetails itemDetails, bool isSelected)
     {
         PartType currenType;

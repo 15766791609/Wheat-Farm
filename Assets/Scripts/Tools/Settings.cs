@@ -5,7 +5,7 @@ using UnityEngine;
 public class Settings 
 {
     //渐变时长
-    public const float fadeDuration = 0.35f;
+    public const float itemFadeDuration = 0.35f;
     //目标透明度
     public const float targetAlpha = 0.45f;
 
@@ -19,4 +19,6 @@ public class Settings
     //一个月几天
     public const int DayHold = 30;
     public const int seasonHold = 3;
+
+    public const float fadeDuration = 1f;
 }

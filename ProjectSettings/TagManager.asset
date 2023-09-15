@@ -7,6 +7,9 @@ TagManager:
   - BoundsConfiner
   - ItemParent
   - CursorCanvas
+  - Dig
+  - Water
+  - CropParent
   layers:
   - Default
   - TransparentFX
@@ -82,4 +85,7 @@ TagManager:
     locked: 0
   - name: Collision
     uniqueID: 4053153779
+    locked: 0
+  - name: NPC Obstacle
+    uniqueID: 4284870703
     locked: 0

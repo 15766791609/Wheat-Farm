@@ -37,7 +37,6 @@ public class SceneNameDrawer : PropertyDrawer
         for (int i = 0; i < sceneNames.Length; i++)
         {
             string path = scenes[i].path;
-            Debug.Log(path);
             //ÇÐ¸î×Ö·û´®
             string[] splitPath = path.Split(scenePathSplit, System.StringSplitOptions.RemoveEmptyEntries);
 

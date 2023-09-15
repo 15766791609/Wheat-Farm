@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : MonoSingleton<TimeManager>
 {
     private int gameSecond, gameMinute, gameHour, gameDay, gameMonth, gameYear;
 
@@ -12,15 +13,18 @@ public class TimeManager : MonoBehaviour
     public bool gameClockPause;
     private float tikTime;
 
-    private void Awake()
+
+    public TimeSpan GameTime => new TimeSpan(gameHour, gameMinute, gameSecond);
+    protected override void Awake()
     {
+        base.Awake();
         NewGameTime();
     }
 
     private void Start()
     {
         EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
-        EventHandler.CallGameMinuteEvent(gameMinute, gameHour);
+        EventHandler.CallGameMinuteEvent(gameMinute, gameHour, gameDay, gameSeason);
     }
     private void Update()
     {
@@ -33,13 +37,22 @@ public class TimeManager : MonoBehaviour
                 UpdataGameTime();
             }
         }
+
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            gameDay++;
+            EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
+            EventHandler.CallGameDayEvent(gameDay, gameSeason);
+        }
+
     }
 
     private void NewGameTime()
     {
         gameSecond = 0;
         gameMinute = 0;
-        gameHour = 0;
+        gameHour = 7;
         gameDay = 1;
         gameMonth = 1;
         gameYear = 2023;
@@ -84,11 +97,11 @@ public class TimeManager : MonoBehaviour
                             }
                         }
                     }
-
+                    EventHandler.CallGameDayEvent(gameDay, gameSeason);
                 }
             }
             EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
         }
-        EventHandler.CallGameMinuteEvent(gameMinute, gameHour);
+        EventHandler.CallGameMinuteEvent(gameMinute, gameHour, gameDay, gameSeason);
     }
 }

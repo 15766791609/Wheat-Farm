@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 894dfffb8c103ac448495e2246e030a3, type: 3}
+  m_Name: PlayerBag
+  m_EditorClassIdentifier: 
+  itemList:
+  - itemID: 1002
+    itemAmount: 5
+  - itemID: 1004
+    itemAmount: 2
+  - itemID: 1014
+    itemAmount: 1
+  - itemID: 1003
+    itemAmount: 1
+  - itemID: 1001
+    itemAmount: 6
+  - itemID: 1010
+    itemAmount: 42
+  - itemID: 1025
+    itemAmount: 3
+  - itemID: 1017
+    itemAmount: 69
+  - itemID: 1008
+    itemAmount: 19
+  - itemID: 1011
+    itemAmount: 88
+  - itemID: 1005
+    itemAmount: 35
+  - itemID: 1021
+    itemAmount: 24
+  - itemID: 1001
+    itemAmount: 2
+  - itemID: 1018
+    itemAmount: 3
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 1013
+    itemAmount: 19
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0
+  - itemID: 0
+    itemAmount: 0

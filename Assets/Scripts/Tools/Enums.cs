@@ -19,7 +19,7 @@ public enum InventoryLocation
 
 public enum PartType
 {
-    None, Carry, Hoe, Break,
+    None, Carry, Hoe, Break, Water, Collect, Chop, Reap
 }
 
 public enum PartName
@@ -37,3 +37,11 @@ public enum GridType
     Diggle, DropItem, PlacFurniture, NPCObstacle
 }
 
+public enum ParticaleEffectType
+{
+    None, LeavesFalling01, LeavesFalling02, Rock, ReapableScenery
+}
+public enum GameState
+{ 
+    GamePlay, Pause
+}

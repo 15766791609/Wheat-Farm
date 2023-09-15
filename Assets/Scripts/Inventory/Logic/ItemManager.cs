@@ -10,18 +10,25 @@ namespace MFarm.Inventory
     public class ItemManager : MonoBehaviour
     {
         public Item itemPrefab;
+        public Item bounceItemPrefab;
         private Transform itemParent;
 
         //每个场景的物品信息
         private Dictionary<string, List<SceneItem>> sceneItemDict = new Dictionary<string, List<SceneItem>>();
+        //记录场景家具
+        private Dictionary<string, List<Scenefurniture>> sceneFurnitureDict = new Dictionary<string, List<Scenefurniture>>();
+        private Transform PlayeTransform => FindObjectOfType<Player>().GetComponent<Transform>();
 
         private void OnEnable()
         {
             EventHandler.InstantiateItemInScene += OnInstantiateItemInScene;
             EventHandler.BeforeScenenUnloadEvent += OnBeforeScenenUnloadEvent;
             EventHandler.AfterScenenUnloadEvent += OnAfterScenenUnloadEvent;
+            EventHandler.DropItemEvent += OnDropItemEvent;
+            EventHandler.BuildFurnitureEvent += OnBuildFurnitureEvent;
         }
 
+       
         private void OnBeforeScenenUnloadEvent()
         {
             GetAllSceneItems();
@@ -32,9 +39,18 @@ namespace MFarm.Inventory
             EventHandler.InstantiateItemInScene -= OnInstantiateItemInScene;
             EventHandler.BeforeScenenUnloadEvent -= OnBeforeScenenUnloadEvent;
             EventHandler.AfterScenenUnloadEvent -= OnAfterScenenUnloadEvent;
+            EventHandler.DropItemEvent -= OnDropItemEvent;
+            EventHandler.BuildFurnitureEvent -= OnBuildFurnitureEvent;
 
 
         }
+
+        private void OnBuildFurnitureEvent(int ID, Vector3 mousePos)
+        {
+            BluePrintDetails bluePrint = InventoryManager.Instance.bluePrintData.GetBluePrinDetalis(ID);
+            var buildItem = Instantiate(bluePrint.bulidPrefab, mousePos, Quaternion.identity, itemParent);
+        }
+
         private void OnAfterScenenUnloadEvent()
         {
             itemParent = GameObject.FindWithTag("ItemParent").transform;
@@ -48,10 +64,25 @@ namespace MFarm.Inventory
         /// <param name="Pos">世界坐标</param>
         private void OnInstantiateItemInScene(int ID, Vector3 Pos)
         {
-            var item = Instantiate(itemPrefab, Pos, Quaternion.identity, itemParent); 
+            var item = Instantiate(bounceItemPrefab, Pos, Quaternion.identity, itemParent); 
             item.ItemID = ID;
+            item.GetComponent<ItemBounce>().InitBounceItem(Pos, Vector3.up);
+
         }
-        
+        /// <summary>
+        /// 将物品扔至某处
+        /// </summary>
+        /// <param name="arg1"></param>
+        /// <param name="arg2"></param>
+        private void OnDropItemEvent(int ID, Vector3 mousePos,ItemType itemType)
+        {
+            if (itemType == ItemType.Seed) return;
+            var item = Instantiate(bounceItemPrefab, PlayeTransform.position, Quaternion.identity, itemParent);
+            item.ItemID = ID;
+            var dir = (mousePos - PlayeTransform.position).normalized;
+            item.GetComponent<ItemBounce>().InitBounceItem(mousePos, dir);
+        }
+
         /// <summary>
         /// 获取当前场景中所有的物品
         /// </summary>

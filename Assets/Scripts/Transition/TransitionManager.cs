@@ -22,10 +22,15 @@ public class TransitionManager : MonoBehaviour
         EventHandler.TransitionEvent -= OnTransitionEvent;
 
     }
-    void Start()
+
+    
+
+    //写成协程在一开始也会被调用
+    private IEnumerator Start()
     {
-        StartCoroutine(LoadSceneSetActive(startSceneName));
         fadeCanvasGroup = FindObjectOfType<CanvasGroup>();
+        yield return LoadSceneSetActive(startSceneName);
+        EventHandler.CallAfterScenenUnloadEvent();
     }
 
     private void OnTransitionEvent(string sceneName, Vector3 pos)
@@ -69,6 +74,8 @@ public class TransitionManager : MonoBehaviour
         Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         SceneManager.SetActiveScene(newScene);
     }
+
+
 
     /// <summary>
     /// 淡入淡出场景

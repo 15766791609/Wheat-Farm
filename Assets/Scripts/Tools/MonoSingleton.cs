@@ -24,7 +24,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
             return instance;
         }
     }
-    private void Awake()
+    protected virtual void Awake()
     {
         if (instance == null)
         {

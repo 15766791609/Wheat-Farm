@@ -9,37 +9,37 @@ namespace MFarm.Inventory
 {
     public class SlotUI : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [Header("»ñÈ¡×é¼ş")]
+        [Header("è·å–ç»„ä»¶")]
         [SerializeField] private Image slotImage;
         public Image SlotHightlight;
         [SerializeField] private TextMeshProUGUI amountText;
         [SerializeField] private Button button;
-        [Header("¸ñ×ÓÀàĞÍ")]
+        [Header("æ ¼å­ç±»å‹")]
         public SlotType slotType;
         public bool isSelected;
 
         public int slotIndex;
 
-        private InventoryUI inventoryUI => GetComponentInParent<InventoryUI>();
+        public InventoryUI inventoryUI => GetComponentInParent<InventoryUI>();
 
-        //ÎïÆ·ĞÅÏ¢
+        //ç‰©å“ä¿¡æ¯
         public ItemDetails itemDetails;
         public int itemAmount;
 
         private void Start()
         {
             isSelected = false;
-            if (itemDetails.itemID == 0)
+            if (itemDetails == null)
             {
                 UpdateEmptySlot();
             }
         }
 
         /// <summary>
-        /// ¸üĞÂ¸ñ×ÓUIĞÅÏ¢
+        /// æ›´æ–°æ ¼å­UIä¿¡æ¯
         /// </summary>
         /// <param name="item">ItemDetails</param>
-        /// <param name="amount">³ÖÓĞÊıÁ¿</param>
+        /// <param name="amount">æŒæœ‰æ•°é‡</param>
         public void UpdateSlot(ItemDetails item, int amount)
         {
             itemDetails = item;
@@ -51,23 +51,27 @@ namespace MFarm.Inventory
         }
 
         /// <summary>
-        /// ½«Slot¸üĞÂÎª¿Õ
+        /// å°†Slotæ›´æ–°ä¸ºç©º
         /// </summary>
         public void UpdateEmptySlot()
         {
             if (isSelected)
             {
                 isSelected = false;
+                inventoryUI.UpdataSlotHightlight(-1);
+
+                EventHandler.CallItemSelectedEvent(itemDetails, isSelected);
             }
+            itemDetails = null;
             slotImage.enabled = false;
             amountText.text = string.Empty;
-            //°´Å¥²»¿Éµã»÷
+            //æŒ‰é’®ä¸å¯ç‚¹å‡»
             button.interactable = false;
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (itemAmount == 0) return;
+            if (itemDetails == null) return;
             isSelected = !isSelected;
             inventoryUI.UpdataSlotHightlight(slotIndex);
 
@@ -105,7 +109,7 @@ namespace MFarm.Inventory
             {
                 if (eventData.pointerCurrentRaycast.gameObject.GetComponent<SlotUI>() == null)
                     return;
-                //»ñÈ¡ÂäµãÎ»ÖÃµÄ±³°ü¸ñ×ÓĞòºÅ
+                //è·å–è½ç‚¹ä½ç½®çš„èƒŒåŒ…æ ¼å­åºå·
                 var targetSlot = eventData.pointerCurrentRaycast.gameObject.GetComponent<SlotUI>();
                 int targerIndex = targetSlot.slotIndex;
 
@@ -113,16 +117,29 @@ namespace MFarm.Inventory
                 {
                     InventoryManager.Instance.SwapItem(slotIndex, targerIndex);
                 }
-            }
-            else if(itemDetails.canDropped)//ÈÓµ½µØÃæ
-            {
-                var pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+                //ä¹°
+                else if(slotType == SlotType.Shop && targetSlot.slotType == SlotType.Bag)
+                {
+                    EventHandler.CallShowTradeUI(itemDetails, false); 
+                }
+                //å–
+                else if (slotType == SlotType.Bag && targetSlot.slotType == SlotType.Shop)
+                {
+                    EventHandler.CallShowTradeUI(itemDetails, true);
+                }
 
-                EventHandler.CallInstantiateItemInScene(itemDetails.itemID, pos);
+
+
             }
+            //else if(itemDetails.canDropped)//æ‰”åˆ°åœ°é¢
+            //{
+            //    var pos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z));
+
+            //    EventHandler.CallInstantiateItemInScene(itemDetails.itemID, pos);
+            //}
 
             //Debug.Log(eventData.pointerCurrentRaycast.gameObject);
-            //È¡Ïû¸ßÁÁÏÔÊ¾
+            //å–æ¶ˆé«˜äº®æ˜¾ç¤º
             inventoryUI.UpdataSlotHightlight(-1);
 
         }

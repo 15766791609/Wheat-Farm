@@ -1,3 +1,4 @@
+using MFarm.CropPlant;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,16 @@ namespace MFarm.Inventory
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             coll = GetComponent<BoxCollider2D>();
+
+
         }
 
         private void Start()
         {
-            if(ItemID != 0)
-            Init(ItemID);
+            if(ItemID !=  0)
+            {
+                Init(ItemID);
+            }
         }
         public void Init(int ID)
         {
@@ -35,6 +40,12 @@ namespace MFarm.Inventory
                 Vector2 newSize = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);
                 coll.size = newSize;
                 coll.offset = new Vector2(0, spriteRenderer.sprite.bounds.center.y);
+            }
+            if(itemDetails.itemType == ItemType.ReapableScenenry)
+            {
+                gameObject.AddComponent<ReapItem>();
+                gameObject.AddComponent<ItemInteractive>();
+                gameObject.GetComponent<ReapItem>().InitCeopData(itemDetails.itemID);
             }
         }
     }

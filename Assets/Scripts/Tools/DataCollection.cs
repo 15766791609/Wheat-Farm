@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 [System.Serializable]
 public class ItemDetails
 {
@@ -65,9 +66,62 @@ public class SceneItem
 }
 
 [System.Serializable]
+public class Scenefurniture
+{
+    //TODO：过多信息
+    public int itemID;
+    public SerializableVector3 position;
+}
+
+
+[System.Serializable]
 public class TileProperty
 {
     public Vector2Int tileCoordinate;
     public GridType gridType;
     public bool boolTypeValue;
 }
+
+[System.Serializable]
+
+public class TileDetails
+{
+    public int girdX, girdY;
+    public bool canDig;
+    public bool canDropItem;
+    public bool canPlaceFurniture;
+    public bool isNPCPbstacle;
+    public int daysSinceDug = -1;
+    public int daysSinceWatered = -1;
+    public int seedItemID = -1;
+    public int growthDays = -1;
+    public int daysSinceLasyHarest = -1;
+
+}
+
+[System.Serializable]
+
+public class NPCPostion
+{
+    public Transform npc;
+    public string startScene;
+    public Vector3 position;
+
+}
+
+[System.Serializable]
+public class SceneRoute
+{
+    public string fromSceneName;
+    public string gotoSceneName;
+    public List<ScenePath> scenePathList;
+}
+[System.Serializable]
+//场景路径
+public class ScenePath
+{
+    public string scnenName;
+    public Vector2Int fromGridCell;
+    public Vector2Int gotoGridCell;
+}
+

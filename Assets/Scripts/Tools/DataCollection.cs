@@ -66,7 +66,7 @@ public class SceneItem
 }
 
 [System.Serializable]
-public class Scenefurniture
+public class SceneFurniture
 {
     //TODO：过多信息
     public int itemID;

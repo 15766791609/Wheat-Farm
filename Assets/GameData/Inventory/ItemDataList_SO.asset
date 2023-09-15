@@ -313,3 +313,15 @@ MonoBehaviour:
     canCarried: 1
     itemPrice: 90
     sellPercentage: 35
+  - itemID: 1026
+    itemName: "\u7BB1\u5B50\u56FE\u7EB8"
+    itemIcon: {fileID: 0}
+    itemType: 2
+    itemOnWorldSprite: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canPickedup: 0
+    canDropped: 0
+    canCarried: 0
+    itemPrice: 0
+    sellPercentage: 0

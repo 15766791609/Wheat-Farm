@@ -18,3 +18,10 @@ MonoBehaviour:
     - itemID: 1011
       itemAmount: 10
     bulidPrefab: {fileID: 6883756481913091301, guid: 177ecda4390177644948d6e908ada62c, type: 3}
+  - ID: 1026
+    resourceItem:
+    - itemID: 1011
+      itemAmount: 10
+    - itemID: 1021
+      itemAmount: 10
+    bulidPrefab: {fileID: 1902193195450785893, guid: bc1f8a390be987047abddad6fdde40c6, type: 3}

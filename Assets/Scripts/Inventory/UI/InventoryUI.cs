@@ -19,6 +19,7 @@ namespace MFarm.Inventory
         [Header("通用背包")]
         [SerializeField] private GameObject baseBag;
         public GameObject shopSlotPrefab;
+        public GameObject boxSlotPrefab;
 
         [Header("交易UI")]
         public TradeUI tradeUI;
@@ -81,6 +82,10 @@ namespace MFarm.Inventory
                     prefab = shopSlotPrefab;
                     bagUI.GetComponent<RectTransform>().pivot = new Vector2(-0.5f, 0.5f);
                     bagUI.SetActive(true);
+                    bagOpened = true;
+                    break;
+                case SlotType.Box:
+                    prefab = boxSlotPrefab;
                     bagOpened = true;
                     break;
                 default: prefab = null;

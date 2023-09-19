@@ -146,6 +146,8 @@ public class CursorManager1 : MonoBehaviour
         {
             currentItem = itemDetails;
             cursorEnable = true;
+            buildIamge.gameObject.SetActive(false);
+
             switch (itemDetails.itemType)
             {
                 case ItemType.Seed:

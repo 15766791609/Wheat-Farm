@@ -68,9 +68,9 @@ public class SceneItem
 [System.Serializable]
 public class SceneFurniture
 {
-    //TODO：过多信息
     public int itemID;
     public SerializableVector3 position;
+    public int boxIndex;
 }
 
 

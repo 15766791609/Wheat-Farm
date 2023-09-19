@@ -92,6 +92,9 @@ public class AnimatorOverride : MonoBehaviour
             case ItemType.ReapTool:
                 currenType = PartType.Reap;
                 break;
+            case ItemType.Furniture:
+                currenType = PartType.Carry;
+                break;
             default:
                 currenType = PartType.None;
                 break;

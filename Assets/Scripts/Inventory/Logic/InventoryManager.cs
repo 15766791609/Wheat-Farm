@@ -11,17 +11,24 @@ namespace MFarm.Inventory
         public ItemDatalist_SO itemDatalist_SO;
         [Header("背包数据")]
         public InventoryBag_SO playerBag;
+        public InventoryBag_SO currentBoxBag;
         [Header("建造蓝图")]
         public BluPrintDataList_SO bluePrintData;
 
         [Header("交易")]
         public int playerMoney;
 
+        //保存所有的盒子数据
+        private Dictionary<string, List<InventoryItem>> boxDataDict = new Dictionary<string, List<InventoryItem>>();
+
+        public int BoxDataAmout => boxDataDict.Count;
+
         private void OnEnable()
         {
             EventHandler.DropItemEvent += OnDropItemEvent;
             EventHandler.HarvestAtPlayPosition += OnHarvestAtPlayPosition;
             EventHandler.BuildFurnitureEvent += OnBuildFurnitureEvent;
+            EventHandler.BaseBagOpenEvent += OnBaseBagOpenEvent;
 
         }
         private void OnDisable()
@@ -29,7 +36,13 @@ namespace MFarm.Inventory
             EventHandler.DropItemEvent -= OnDropItemEvent;
             EventHandler.HarvestAtPlayPosition -= OnHarvestAtPlayPosition;
             EventHandler.BuildFurnitureEvent -= OnBuildFurnitureEvent;
+            EventHandler.BaseBagOpenEvent -= OnBaseBagOpenEvent;
 
+        }
+
+        private void OnBaseBagOpenEvent(SlotType slotType, InventoryBag_SO bag_SO)
+        {
+            currentBoxBag = bag_SO;
         }
 
         private void OnBuildFurnitureEvent(int ID, Vector3 mousePos)
@@ -122,12 +135,12 @@ namespace MFarm.Inventory
         /// <param name="amount">数量</param>
         private void AddItemAtIndex(int ID, int index, int amount)
         {
-            if(index == -1 && CheckBagCapacity()) // 背包没有这个物品且背包有空位
+            if (index == -1 && CheckBagCapacity()) // 背包没有这个物品且背包有空位
             {
                 var item = new InventoryItem { itemID = ID, itemAmount = amount };
                 for (int i = 0; i < playerBag.itemList.Count; i++)
                 {
-                    if(playerBag.itemList[i].itemID == 0)
+                    if (playerBag.itemList[i].itemID == 0)
                     {
                         playerBag.itemList[i] = item;
                         break;
@@ -155,7 +168,7 @@ namespace MFarm.Inventory
             InventoryItem currentItem = playerBag.itemList[fromInxde];
             InventoryItem targetItem = playerBag.itemList[targetIndex];
 
-            if(targetItem.itemID == 0)
+            if (targetItem.itemID == 0)
             {
                 playerBag.itemList[fromInxde] = new InventoryItem();
                 playerBag.itemList[targetIndex] = currentItem;
@@ -169,15 +182,68 @@ namespace MFarm.Inventory
         }
 
         /// <summary>
+        /// 交换背包数据
+        /// </summary>
+        /// <param name="locationFrom"></param>
+        /// <param name="fromIndex"></param>
+        /// <param name="locationTarget"></param>
+        /// <param name="targetIndex"></param>
+        public void SwapItem(InventoryLocation locationFrom, int fromIndex, InventoryLocation locationTarget, int targetIndex)
+        {
+            var currentList = GetItemList(locationFrom);
+            var targetList = GetItemList(locationTarget);
+
+            InventoryItem currentItem = currentList[fromIndex];
+            if (targetIndex < targetList.Count)
+            {
+                InventoryItem targetItem = targetList[targetIndex];
+                if (targetItem.itemID != 0 && currentItem.itemID != targetItem.itemID)//有两个不同物体
+                {
+                    currentList[fromIndex] = targetItem;
+                    targetList[targetIndex] = currentItem;
+                }
+                else if (currentItem.itemID == targetItem.itemID)//相同两个物体
+                {
+                    targetItem.itemAmount += currentItem.itemAmount;
+                    targetList[targetIndex] = targetItem;
+                    currentList[fromIndex] = new InventoryItem();
+                }
+                else//目标为空
+                {
+                    targetList[targetIndex] = currentItem;
+                    currentList[fromIndex] = new InventoryItem();
+                }
+                EventHandler.CallUpdataInventoryUI(locationFrom, currentList);
+                EventHandler.CallUpdataInventoryUI(locationTarget, targetList);
+            }
+        }
+
+
+
+        private List<InventoryItem> GetItemList(InventoryLocation location)
+        {
+            switch (location)
+            {
+                case InventoryLocation.Player:
+                    return playerBag.itemList;
+                case InventoryLocation.Box:
+                    return currentBoxBag.itemList;
+                default:
+                    return null;
+            }
+
+        }
+
+        /// <summary>
         /// 移除指定数量的背包物品
         /// </summary>
         /// <param name="ID">物品ID</param>
         /// <param name="removeAmount">物品数量</param>
-        private  void RemoveItem(int ID, int removeAmount)
+        private void RemoveItem(int ID, int removeAmount)
         {
             var index = GetItemIndexInBag(ID);
 
-            if(playerBag.itemList[index].itemAmount > removeAmount)
+            if (playerBag.itemList[index].itemAmount > removeAmount)
             {
                 var amount = playerBag.itemList[index].itemAmount - removeAmount;
                 var item = new InventoryItem
@@ -187,7 +253,7 @@ namespace MFarm.Inventory
                 };
                 playerBag.itemList[index] = item;
             }
-            else if(playerBag.itemList[index].itemAmount == removeAmount)
+            else if (playerBag.itemList[index].itemAmount == removeAmount)
             {
                 var item = new InventoryItem();
                 playerBag.itemList[index] = item;
@@ -210,9 +276,9 @@ namespace MFarm.Inventory
             int cost = itemDetails.itemPrice * amount;
             int index = GetItemIndexInBag(itemDetails.itemID);
 
-            if(isSellTrade)
+            if (isSellTrade)
             {
-                if(playerBag.itemList[index].itemAmount >= amount)
+                if (playerBag.itemList[index].itemAmount >= amount)
                 {
                     RemoveItem(itemDetails.itemID, amount);
                     cost = (int)(cost * itemDetails.sellPercentage);
@@ -252,6 +318,29 @@ namespace MFarm.Inventory
                 else return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 查找箱子数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public List<InventoryItem> GetBoxDataList(string key)
+        {
+            if (boxDataDict.ContainsKey(key))
+            {
+                return boxDataDict[key];
+            }
+            return null;
+        }
+
+        public void AddBoxDataDict(Box box)
+        {
+            var key = box.name + box.index;
+            if (!boxDataDict.ContainsKey(key))
+            {
+                boxDataDict.Add(key, box.boxBagData.itemList);
+            }
         }
 
     }

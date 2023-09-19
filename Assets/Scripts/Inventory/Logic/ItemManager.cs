@@ -48,6 +48,12 @@ namespace MFarm.Inventory
         {
             BluePrintDetails bluePrint = InventoryManager.Instance.bluePrintData.GetBluePrinDetalis(ID);
             var buildItem = Instantiate(bluePrint.bulidPrefab, mousePos, Quaternion.identity, itemParent);
+
+            if(buildItem.GetComponent<Box>())
+            {
+                buildItem.GetComponent<Box>().index = InventoryManager.Instance.BoxDataAmout;
+                buildItem.GetComponent<Box>().InitBox(buildItem.GetComponent<Box>().index);
+            }
         }
 
         private void OnAfterScenenUnloadEvent()
@@ -151,6 +157,11 @@ namespace MFarm.Inventory
                     itemID = item.itemID,
                     position = new SerializableVector3(item.transform.position)
                 };
+
+                if(item.GetComponent<Box>())
+                {
+                    sceneFurniture.boxIndex = item.GetComponent<Box>().index;
+                }
                 currentSceneFurniture.Add(sceneFurniture);
             }
             //判断字典里是否已经存有改数据
@@ -176,7 +187,13 @@ namespace MFarm.Inventory
                 {
                     foreach (SceneFurniture sceneFurniture in currentSceneFurniture)
                     {
-                        OnBuildFurnitureEvent(sceneFurniture.itemID, sceneFurniture.position.ToVector3());
+                        BluePrintDetails bluePrint = InventoryManager.Instance.bluePrintData.GetBluePrinDetalis(sceneFurniture.itemID);
+                        var buildItem = Instantiate(bluePrint.bulidPrefab, sceneFurniture.position.ToVector3(), Quaternion.identity, itemParent);
+
+                        if (buildItem.GetComponent<Box>())
+                        {
+                            buildItem.GetComponent<Box>().InitBox(sceneFurniture.boxIndex);
+                        }
                     }
                 }
             }

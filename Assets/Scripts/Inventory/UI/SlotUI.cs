@@ -34,6 +34,22 @@ namespace MFarm.Inventory
                 UpdateEmptySlot();
             }
         }
+        public InventoryLocation Location
+        {
+            get
+            {
+                switch( slotType)
+                {
+                    case SlotType.Bag:
+                        return InventoryLocation.Player;
+                    case SlotType.Box:
+                        return InventoryLocation.Box;
+                    default:
+                        return InventoryLocation.Player;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 更新格子UI信息
@@ -126,6 +142,10 @@ namespace MFarm.Inventory
                 else if (slotType == SlotType.Bag && targetSlot.slotType == SlotType.Shop)
                 {
                     EventHandler.CallShowTradeUI(itemDetails, true);
+                }
+                else if (slotType!= SlotType.Shop && targetSlot.slotType != SlotType.Shop && slotType != targetSlot.slotType)
+                {
+                    InventoryManager.Instance.SwapItem(Location, slotIndex, targetSlot.Location, targetSlot.slotIndex);
                 }
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Settings 
 {
@@ -32,4 +33,10 @@ public class Settings
     public const float animationBreakTime = 5f;//¶¯»­¼ä¸ô
 
     public const int maxGridSize = 9999;
+
+
+    //µÆ¹â
+    public const float lightChnageDuration = 25f;
+    public static TimeSpan morningTime = new TimeSpan(5, 0, 0);
+    public static TimeSpan nightTime = new TimeSpan(19, 0, 0);
 }

@@ -147,11 +147,18 @@ public static class EventHandler
     {
         ShowTradeUI?.Invoke(item, isSell);
     }
-
+    //Ω®‘Ï
     public static event Action<int, Vector3> BuildFurnitureEvent;
     public static void CallBuildFurnitureEvent(int ID, Vector3 Pos)
     {
         BuildFurnitureEvent?.Invoke(ID, Pos);
+    }
+
+    //µ∆π‚
+    public static event Action<Season, LightShift, float> LightShiftChangeEvent;
+    public static void CallLightShiftChangeEvent(Season season, LightShift lightShift, float timeDifference)
+    {
+        LightShiftChangeEvent?.Invoke(season,lightShift, timeDifference);
     }
 
 }

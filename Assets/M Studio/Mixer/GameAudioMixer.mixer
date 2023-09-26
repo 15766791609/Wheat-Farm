@@ -73,7 +73,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: 2d2287418cd2afc43924ae673f57555e
   m_FloatValues:
     391ae7e130dc7c04babac73fb557e3c0: -80
-    a1d89d62a94c98f4da9783beb276911b: -0.08374829
+    a1d89d62a94c98f4da9783beb276911b: 0.3945702
     9581d1246eb454b4e91ff2b4dc8291a7: -12.498478
   m_TransitionOverrides: {}
 --- !u!243 &-3460813775700509454
@@ -217,7 +217,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: 98081f5a07b5dcb498c671451c612c73
   m_FloatValues:
     391ae7e130dc7c04babac73fb557e3c0: -9.833286
-    a1d89d62a94c98f4da9783beb276911b: -9.833286
+    a1d89d62a94c98f4da9783beb276911b: -0.08374829
     9581d1246eb454b4e91ff2b4dc8291a7: -11.944499
   m_TransitionOverrides: {}
 --- !u!244 &1906140852780488181

@@ -161,4 +161,16 @@ public static class EventHandler
         LightShiftChangeEvent?.Invoke(season,lightShift, timeDifference);
     }
 
+    //“Ù–ß
+    public static event Action<SoundDetails> InitSoundEffect;
+    public static void CallInitSoundEffect(SoundDetails soundDetails)
+    {
+        InitSoundEffect?.Invoke(soundDetails);
+    }
+    
+    public static event Action<SoundName> PlaySoundEvent;
+    public static void CallPlaySoundEvent(SoundName soundName)
+    {
+        PlaySoundEvent?.Invoke(soundName);
+    }
 }

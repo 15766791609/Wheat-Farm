@@ -7,13 +7,16 @@ public class PoolManager : MonoBehaviour
 {
     public List<GameObject> poolPrefabs;
     public List<ObjectPool<GameObject>> poolEffectList = new List<ObjectPool<GameObject>>();
+    private Queue<GameObject> soundQueue = new Queue<GameObject>();
     private void OnEnable()
     {
         EventHandler.ParticleEffectEvent += OnParticleEffectEvent;
+        EventHandler.InitSoundEffect += InitSoundEffect;
     }
     private void OnDisable()
     {
         EventHandler.ParticleEffectEvent -= OnParticleEffectEvent;
+        EventHandler.InitSoundEffect -= InitSoundEffect;
 
     }
     private void Start()
@@ -59,6 +62,9 @@ public class PoolManager : MonoBehaviour
             case ParticaleEffectType.ReapableScenery:
                 objPool = poolEffectList[3];
                 break;
+            case ParticaleEffectType.Sound:
+                objPool = poolEffectList[4];
+                break;
             default:
                 objPool = null;
                 break;
@@ -74,5 +80,41 @@ public class PoolManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         pool.Release(obj);
         yield break;
+    }
+
+    private void CreateSoundPool()
+    {
+        var parent = transform.GetChild(4).transform;
+        parent.SetParent(transform);
+        for (int i = 0; i < 20; i++)
+        {
+            GameObject newObj = Instantiate(poolPrefabs[4], parent);
+            newObj.SetActive(false);
+            soundQueue.Enqueue(newObj);
+        }
+    }
+
+    private GameObject GetPoolObject()
+    {
+        if (soundQueue.Count < 2)
+        {
+            CreateSoundPool();
+        }
+        return soundQueue.Dequeue();
+    }
+
+    private void InitSoundEffect(SoundDetails soundDetails)
+    {
+        var obj = GetPoolObject();
+        obj.GetComponent<Sound>().SetSound(soundDetails);
+        obj.SetActive(true);
+        StartCoroutine(DisableSound(obj, soundDetails.soundClip.length));
+    }
+
+    private IEnumerator DisableSound(GameObject obj, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        obj.SetActive(false);
+        soundQueue.Enqueue(obj);
     }
 }

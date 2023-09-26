@@ -39,13 +39,23 @@ public enum GridType
 
 public enum ParticaleEffectType
 {
-    None, LeavesFalling01, LeavesFalling02, Rock, ReapableScenery
+    None, LeavesFalling01, LeavesFalling02, Rock, ReapableScenery, Sound
 }
 public enum GameState
-{ 
+{
     GamePlay, Pause
 }
 public enum LightShift
 {
     Morning, Night
+}
+
+//“Ù–ß
+public enum SoundName
+{
+    none, FootStepSoft, FootStepHard,
+    Axe, Pickaxe, Hoe, Reap, Water, Basket, Chop,
+    Pickup, Plant, TreeFalling, Rustle,
+    AmbientCountryside1, AmbientCountryside2,
+    MusicCalm1, MusicCalm2, MusicCalm3, MusicCalm4, MusicCalm5, MusicCalm6, AmbientIndoor1
 }

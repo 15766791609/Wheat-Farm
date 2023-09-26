@@ -53,6 +53,9 @@ public class CropDetails
     public ParticaleEffectType effectType;
     public Vector3 effectPos;
 
+
+    [Header("音效")]
+    public SoundName soundEffect;
     /// <summary>
     /// 检测工具是否符合
     /// </summary>

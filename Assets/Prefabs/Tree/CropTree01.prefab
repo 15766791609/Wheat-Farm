@@ -332,6 +332,7 @@ MonoBehaviour:
     hasParticalEffect: 0
     effectType: 0
     effectPos: {x: 0, y: 0, z: 0}
+    soundEffect: 0
   tileDetails:
     girdX: 0
     girdY: 0

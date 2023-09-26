@@ -87,7 +87,7 @@ namespace MFarm.Map
                     case ItemType.Seed:
                         EventHandler.CallPlanSeedEvent(itemDetails.itemID, currentTile);
                         EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos, itemDetails.itemType);
-
+                        EventHandler.CallPlaySoundEvent(SoundName.Plant);
                         break;
                     case ItemType.Commodity:
                         EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos, itemDetails.itemType);
@@ -97,10 +97,12 @@ namespace MFarm.Map
                         currentTile.daysSinceDug = 0;
                         currentTile.canDig = false;
                         currentTile.canDropItem = false;
+                        EventHandler.CallPlaySoundEvent(SoundName.Hoe);
                         break;
                     case ItemType.WaterTool:
                         SetWaterGround(currentTile);
                         currentTile.daysSinceWatered = 0;
+                        EventHandler.CallPlaySoundEvent(SoundName.Water);
                         break;
                     case ItemType.ChopTool:
                     case ItemType.BreakTool:

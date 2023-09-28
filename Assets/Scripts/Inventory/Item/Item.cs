@@ -44,7 +44,7 @@ namespace MFarm.Inventory
             if(itemDetails.itemType == ItemType.ReapableScenenry)
             {
                 gameObject.AddComponent<ReapItem>();
-                gameObject.AddComponent<ItemInteractive>();
+                gameObject.AddComponent<ITimelineClipAsset>();
                 gameObject.GetComponent<ReapItem>().InitCeopData(itemDetails.itemID);
             }
         }

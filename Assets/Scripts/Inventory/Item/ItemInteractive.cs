@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInteractive : MonoBehaviour
+public class ITimelineClipAsset : MonoBehaviour
 {
     private bool isAnimating = false;
     private WaitForSeconds pause = new WaitForSeconds(0.04f);

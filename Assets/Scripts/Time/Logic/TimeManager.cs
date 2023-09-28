@@ -32,6 +32,24 @@ public class TimeManager : MonoSingleton<TimeManager>
         EventHandler.CallLightShiftChangeEvent(gameSeason, GetCurrenetLightShift(), timeDifference);
 
     }
+
+    private void OnEnable()
+    {
+        EventHandler.BeforeScenenUnloadEvent += OnBeforeScenenUnloadEvent;
+        EventHandler.AfterScenenUnloadEvent += OnAfterScenenUnloadEvent;
+        EventHandler.UpdateGameStateEvent += OnUpdateGameStateEvent;
+    }
+
+ 
+    private void OnDisable()
+    {
+        EventHandler.BeforeScenenUnloadEvent -= OnBeforeScenenUnloadEvent;
+        EventHandler.AfterScenenUnloadEvent -= OnAfterScenenUnloadEvent;
+        EventHandler.UpdateGameStateEvent -= OnUpdateGameStateEvent;
+    }
+
+
+
     private void Update()
     {
         if (!gameClockPause)
@@ -53,6 +71,25 @@ public class TimeManager : MonoSingleton<TimeManager>
         }
 
     }
+
+    private void OnUpdateGameStateEvent(GameState gameState)
+    {
+        gameClockPause = gameState == GameState.Pause;
+
+    }
+
+    private void OnAfterScenenUnloadEvent()
+    {
+        gameClockPause = false;
+
+    }
+
+    private void OnBeforeScenenUnloadEvent()
+    {
+        gameClockPause = true;
+    }
+
+
 
     private void NewGameTime()
     {

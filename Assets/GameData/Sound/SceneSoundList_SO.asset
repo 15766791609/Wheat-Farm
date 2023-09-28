@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: SceneSoundList_SO
   m_EditorClassIdentifier: 
   sceneSoundList:
+  - sceneName: 00.Sea
+    ambient: 15
+    music: 18
   - sceneName: 01.Field
     ambient: 14
     music: 17
   - sceneName: 02.Home
-    ambient: 14
-    music: 16
+    ambient: 15
+    music: 18
   - sceneName: 03.Stall
     ambient: 15
     music: 18
